@@ -1,0 +1,9 @@
+<launch>
+
+  <group ns="meccanoid1">
+    <node pkg="meccanoid_pkg" type="talker" name="meccanoid" launch-prefix="sudo"/>
+  </group>
+
+</launch>
+
+
