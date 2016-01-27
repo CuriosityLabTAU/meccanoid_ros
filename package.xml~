@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>meccanoid_ros</name>
+  <name>meccanoid_pkg</name>
   <version>0.0.0</version>
-  <description>The meccanoid_ros package</description>
+  <description>The meccanoid_pkg package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
