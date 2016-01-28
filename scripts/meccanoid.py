@@ -19,20 +19,14 @@ class meccanoid():
         self.ser.close()             # close port
 
     def talker(self):
-        pub = rospy.Publisher('chatter', String, queue_size=10)
-        rospy.init_node('talker', anonymous=True)
-        rate = rospy.Rate(10) # 10hz
-        while not rospy.is_shutdown():
-            hello_str = "hello world %s" % rospy.get_time()
-            rospy.loginfo(hello_str)
-            pub.publish(hello_str)
-            rate.sleep()
+        #pub = rospy.Publisher('chatter', String, queue_size=10)
+        #rospy.init_node('talker', anonymous=True)
+        pass
 
     def callback(self, data):
         print(data.data)
         self.ser.write(str.encode(data.data))     # write a string
-
-        rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+        print("--- done ---")
 
     def listener(self):
 
@@ -41,10 +35,10 @@ class meccanoid():
         # anonymous=True flag means that rospy will choose a unique
         # name for our 'listener' node so that multiple listeners can
         # run simultaneously.
-        rospy.init_node('listener', anonymous=True)
+        rospy.init_node('meccanoid_listener')
         rospy.on_shutdown(self.close_serial)
 
-        rospy.Subscriber("chatter", String, self.callback)
+        rospy.Subscriber("to_meccanoid", String, self.callback)
 
         # spin() simply keeps python from exiting until this node is stopped
         rospy.spin()
