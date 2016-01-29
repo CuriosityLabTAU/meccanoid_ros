@@ -4,6 +4,7 @@ import rospy
 from std_msgs.msg import String
 import serial
 import os
+import time
 
 
 class meccanoid():
@@ -11,12 +12,19 @@ class meccanoid():
 
     def start_serial(self):
         port = '/dev/ttyACM0'
+        print("Waiting for meccanoid to be connected via arduino ...")
+        while not os.path.exists(port):
+            pass
         os.system("sudo chmod 666 " + port)
+        time.sleep(1)
         self.ser = serial.Serial(port, 9600)  # open serial port
-        print(self.ser.name)         # check which port was really used
+        time.sleep(1)
+        print("Arduino connected: ", self.ser.name)# check which port was really used
+
 
     def close_serial(self):
         self.ser.close()             # close port
+        pass
 
     def talker(self):
         #pub = rospy.Publisher('chatter', String, queue_size=10)
@@ -25,8 +33,11 @@ class meccanoid():
 
     def callback(self, data):
         print(data.data)
-        self.ser.write(str.encode(data.data))     # write a string
+        self.ser.write(str.encode(data.data + "\n"))     # write a string
+        time.sleep(1)
         print("--- done ---")
+
+        # LIM, if data.data==300
 
     def listener(self):
 
